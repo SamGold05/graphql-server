@@ -3,16 +3,13 @@ import mongoose from 'mongoose';
 import Choice from './choice';
 import Rating from './rating';
 import Page from './page';
+import Quiz from './quiz';
+
 // SET UP Mongoose Promises.
 mongoose.Promise = global.Promise;
 
 
-export const startDB = ({
-  user,
-  pwd,
-  url,
-  db
-}) => {
+export const startDB = ({user,pwd,url,db}) => {
   const connectionString = `mongodb://${user}:${pwd}@${url}/${db}`
   mongoose.connect(connectionString, {
     useNewUrlParser: true
@@ -35,11 +32,11 @@ export const startDB = ({
       process.exit(0);
     });
   });
-
 }
 
 export const models = {
   Choice,
   Rating,
-  Page
+  Page,
+  Quiz
 }

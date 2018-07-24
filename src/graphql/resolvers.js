@@ -11,7 +11,19 @@ export default {
       }
     }
   },
+  Quiz: {
+    pages: (quiz, args, { models }) => models.Page.find({quiz: quiz._id })
+  },
+  Page: {
+    quiz: (page, args, { models }) => models.Quiz.findById(page.quiz)
+  },
   Query: {
+    pages:  async (parent, {type}, { models }, info) => {
+      return models.Page.find({});
+    },
+    quizes:  async (parent, {type}, { models }, info) => {
+      return models.Quiz.find({});
+    },
     question: async (parent, {type}, { models }, info) => {
       let question;
       if (type === 'CHOICE') {
@@ -46,23 +58,34 @@ export default {
         throw new Error(e);
       }
     },
-    createPage: async (parent, {
-      title
-    }, {
-      models
-    }, info) => {
-      const Page = await models.Page.findOne({
-        title
-      });
-      if (Page) {
+    createQuiz: async (parent, { title }, { models }, info) => {
+      const Quiz = await models.Quiz.findOne({title});
+      if (Quiz) {
         throw new Error('Please provide a unique title.');
       }
-      const newPage = new models.Page({
+      const newQuiz = new models.Quiz({
         title
       });
       try {
-        const data = await newPage.save();
-        return data;
+        return newQuiz.save();
+      } catch (e) {
+        throw new Error(e);
+      }
+    },
+    createPage: async (parent, { quizId, title }, { models }, info) => {
+      const Page = await models.Page.findOne({title});
+      if (Page) {
+        throw new Error('Please provide a unique title.');
+      }
+      let count = await models.Page.countDocuments();
+      const quiz = await models.Quiz.findById(quizId);
+      const newPage = new models.Page({
+        title,
+        number: count + 1,
+        quiz
+      });
+      try {
+        return newPage.save();
       } catch (e) {
         throw new Error(e);
       }

@@ -1,19 +1,15 @@
 import mongoose, { Schema } from 'mongoose';
 
-const ChoiceSchema = new Schema({
+const QuizSchema = new Schema({
   title: {
     type: String,
     required: true,
     unique: true,
   },
-  type: {
-    type: String,
-    default: "choice",
-  },
-  page: { 
+  pages: [{
     type: Schema.Types.ObjectId,
     ref: "Page"
-  }
+  }]
 });
 
-export default mongoose.model('Choice', ChoiceSchema);
+export default mongoose.model('Quiz', QuizSchema);

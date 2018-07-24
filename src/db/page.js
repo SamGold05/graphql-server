@@ -1,14 +1,20 @@
-import mongoose from 'mongoose';
-var Schema = mongoose.Schema;
-const PageSchema = new mongoose.Schema({
+import mongoose, { Schema } from 'mongoose';
+
+const PageSchema = new Schema({
   title: {
     type: String,
     required: true,
     unique: true,
   },
-  choises: [{
-    type: Schema.Types.ObjectId, ref: "Choise"
-  }]
+  number: {
+    type: Number,
+    required: true,
+    unique: true,
+  },
+  quiz: {
+    type: Schema.Types.ObjectId,
+    ref: "Quiz"
+  }
 });
 
 export default mongoose.model('Page', PageSchema);

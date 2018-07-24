@@ -1,6 +1,6 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 
-const RatingSchema = new mongoose.Schema({
+const RatingSchema = new Schema({
   title: {
     type: String,
     required: true,

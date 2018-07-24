@@ -4,23 +4,33 @@ enum QuestionType {
 }
 
 type Query {
+  quizes: [Quiz]
+  pages: [Page]
   question(type: QuestionType!): [Question]!
   questions: [Question]
 }
 
 type Mutation {
-  createPage(title: String!): Page!
+  createQuiz(title: String!): Quiz!
+  createPage(quizId: String!, title: String!): Page!
   createComponentChoice(title: String!): Choice!
   createComponentRating(title: String!): Rating!
-  deleteComponent(id: ID!, type: QuestionType!): String!
+  deleteComponent(id: String!, type: QuestionType!): String!
 }
 
 type Quiz {
   id: String!
-  name: String!
+  title: String!
   pages: [Page!]!
 }
 
+type Page {
+  id: String!
+  title: String!
+  number: Int!
+  quiz: Quiz!
+  # questions: [Question!]!
+}
 
 union Question = Choice | Rating
 
@@ -29,16 +39,13 @@ type Choice {
   id: String!
   title: String!
   type: String!
+  page: Page!
 }
 
 type Rating {
   id: String!
   title: String!
   type: String!
+  page: Page!
 }
 
-type Page {
-  id: String!
-  title: String!
-  choises: [Choice]
-}
