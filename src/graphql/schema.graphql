@@ -1,0 +1,42 @@
+enum QuestionType {
+  CHOICE
+  RATING
+}
+
+type Query {
+  question(type: QuestionType!): [Question]!
+  questions: [Question]
+}
+
+type Mutation {
+  createComponentChoice(title: String!): Choice!
+  createComponentRating(title: String!): Rating!
+  deleteComponent(id: ID!, type: QuestionType!): String!
+}
+
+type Quiz {
+  id: String!
+  name: String!
+  pages: [Page!]!
+}
+
+type Page {
+  id: String!
+  pageNumber: Int!
+  questions: [Question!]!
+}
+
+union Question = Choice | Rating
+
+# Schema Types
+type Choice {
+  id: String!
+  title: String!
+  type: String!
+}
+
+type Rating {
+  id: String!
+  title: String!
+  type: String!
+}
