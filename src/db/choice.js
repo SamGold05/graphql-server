@@ -1,6 +1,6 @@
 import mongoose from 'mongoose';
-
-const ChoiceSchema = new mongoose.Schema({
+var Schema = mongoose.Schema;
+const ChoiceSchema = new Schema({
   title: {
     type: String,
     required: true,
@@ -10,6 +10,7 @@ const ChoiceSchema = new mongoose.Schema({
     type: String,
     default: "choice",
   },
+  page: { type: Schema.Types.ObjectId, ref: "Page"}
 });
 
 export default mongoose.model('Choice', ChoiceSchema);

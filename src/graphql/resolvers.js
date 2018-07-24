@@ -46,6 +46,27 @@ export default {
         throw new Error(e);
       }
     },
+    createPage: async (parent, {
+      title
+    }, {
+      models
+    }, info) => {
+      const Page = await models.Page.findOne({
+        title
+      });
+      if (Page) {
+        throw new Error('Please provide a unique title.');
+      }
+      const newPage = new models.Page({
+        title
+      });
+      try {
+        const data = await newPage.save();
+        return data;
+      } catch (e) {
+        throw new Error(e);
+      }
+    },
     createComponentChoice: async (parent, { title }, { models }, info) => {
       const Component = await models.Choice.findOne({ title });
       if (Component) {

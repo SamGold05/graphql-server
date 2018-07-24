@@ -9,6 +9,7 @@ type Query {
 }
 
 type Mutation {
+  createPage(title: String!): Page!
   createComponentChoice(title: String!): Choice!
   createComponentRating(title: String!): Rating!
   deleteComponent(id: ID!, type: QuestionType!): String!
@@ -20,11 +21,6 @@ type Quiz {
   pages: [Page!]!
 }
 
-type Page {
-  id: String!
-  pageNumber: Int!
-  questions: [Question!]!
-}
 
 union Question = Choice | Rating
 
@@ -39,4 +35,10 @@ type Rating {
   id: String!
   title: String!
   type: String!
+}
+
+type Page {
+  id: String!
+  title: String!
+  choises: [Choice]
 }
